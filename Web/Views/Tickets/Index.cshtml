@@ -1,0 +1,60 @@
+﻿@model List<Tickets.Domain.DomainModels.Ticket>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="container">
+    <div class="row">
+        <a class="btn btn-success h-25 float-right" asp-action="Create">Insert New Ticket</a>
+        <div class="col-4 ml-auto">
+            <form class="" method="get" asp-action="Index" asp-controller="Tickets">
+                <div class="form-group ml-5">
+                    <label for="datetime" class="">Valid until date: </label>
+                    <input type="datetime-local" class="form-control" name="datetime" id="datetime" />
+                    <button class="btn btn-primary mt-2">Filter</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        var item = Model[i];
+
+        if (i % 3 == 0)
+        {
+@:<div class="row">
+}
+
+<div class="col-md-3 m-4">
+    <div class="card" style="width: 18rem; height: 30rem;">
+        <img class="card-img-top" src="@item.Image" style="height: 50%;" alt="Image for ticket!">
+
+        <div class="card-body">
+            <h3 class="card-title">@item.Name</h3>
+           
+            <p class="card-text">Со важност до: <br/>
+            @item.ValidUntil.ToString()</p>
+
+            <h6>Price: @item.Price ДЕН</h6>
+        </div>
+
+        <div class="card-footer">
+            <a asp-controller="Tickets" asp-action="AddTicketToCart" asp-route-id="@item.Id" class="btn btn-info">Add to Card</a>
+            <a asp-controller="Tickets" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
+        </div>
+    </div>
+</div> if (i % 3 == 2)
+                {
+@:</div>
+}
+}
+</div>
+
